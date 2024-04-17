@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-gradient {
+  background-image: linear-gradient(
+    to right,
+    white,
+    rgb(111, 111, 255) rgb(253, 209, 253) white
+  );
+}
