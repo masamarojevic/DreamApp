@@ -5,7 +5,10 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
+
   const router = useRouter();
+
+  //FORM
   const [formData, setFormData] = useState<User>({
     email: "",
     password: "",
@@ -21,6 +24,7 @@ export default function Home() {
           : event.target.value,
     });
   };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -48,25 +52,30 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-r from-gray-300 via-white to-gray-300">
-      {/* Position cloud image at the bottom */}
+    
       <img
         src="/clouds.png"
         className="absolute z-0 w-full bottom-0"
         alt="Cloud"
-        style={{ maxWidth: "150%" }} // Set a maximum width if necessary
+        style={{ maxWidth: "150%" }} 
       />
 
       <div className="z-10">
+
         <h1 className="text-5xl font-bold text-center mb-8 text-gray-800">
           DreamCatch
         </h1>
+
         <div className="max-w-md w-full shadow-xl rounded-2xl p-8 border-4 border-white bg-gray-200">
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col">
+
               <label
                 htmlFor="email"
                 className="mb-2 text-sm font-medium text-gray-700"
               ></label>
+
               <input
                 type="email"
                 id="email"
@@ -76,11 +85,14 @@ export default function Home() {
                 placeholder="email:"
               />
             </div>
+
             <div className="flex flex-col">
+
               <label
                 htmlFor="password"
                 className="mb-2 text-sm font-medium text-gray-700"
               ></label>
+
               <input
                 type="password"
                 id="password"
@@ -90,6 +102,7 @@ export default function Home() {
                 placeholder="password:"
               />
             </div>
+            
             <div className="flex justify-center">
               <button
                 type="submit"

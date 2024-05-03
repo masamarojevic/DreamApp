@@ -6,8 +6,9 @@ export default function HomePage() {
   const [notes, setNotes] = useState<noteItem[]>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Make sure to manage tokens securely
+    const token = localStorage.getItem("token");
 
+    //GET NOTES/DISPLAY IN SCROLL
     if (token) {
       fetch("/api/getNotes", {
         method: "GET",
@@ -40,25 +41,31 @@ export default function HomePage() {
             placeholder="search for dream"
             className="px-4 py-2 border rounded-lg w-full max-w-md"
           />
+
           <Link href="/pages/notePage">
             <button className="px-6 py-2 bg-white rounded-lg shadow">
               new
             </button>
           </Link>
         </div>
+
         <div className="overflow-auto h-[80vh] p-2 bg-white rounded-lg shadow">
           <div className="grid grid-cols-3 gap-5">
             {notes.length > 0 ? (
-              notes.map((note, index) => (
-                <div
-                  key={index}
-                  className="p-4 border rounded-lg bg-gray-200 shadow-md"
-                >
-                  <h5 className="text-lg font-bold mb-2">{note.title}</h5>
-                  <p className="text-sm">{note.description}</p>
-                  {/* You can add a Link to view/edit the note here */}
-                </div>
-              ))
+              notes.map((note) => {
+                console.log("Rendering note with ID:", note._id); // Log the ID
+                return (
+                  <Link
+                    key={note._id.toString()}
+                    href={`/pages/viewNote/${note._id.toString()}`}
+                  >
+                    <div className="p-4 border rounded-lg bg-gray-200 shadow-md cursor-pointer">
+                      <h5 className="text-lg font-bold mb-2">{note.title}</h5>
+                      <p className="text-sm">{note.description}</p>
+                    </div>
+                  </Link>
+                );
+              })
             ) : (
               <p>No notes to display</p>
             )}

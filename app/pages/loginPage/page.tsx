@@ -48,12 +48,12 @@ export default function Page() {
   };
   return (
     <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-r from-gray-300 via-white to-gray-300">
-      {/* Position cloud image at the bottom */}
+    
       <img
         src="/clouds.png"
         className="absolute z-0 w-full bottom-0"
         alt="Cloud"
-        style={{ maxWidth: "150%" }} // Set a maximum width if necessary
+        style={{ maxWidth: "150%" }} 
       />
 
       <div className="z-10">

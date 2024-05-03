@@ -6,7 +6,7 @@ export interface User {
   notes: noteItem[];
 }
 export interface noteItem {
-  // id: number;
+  _id: Types.ObjectId;
   title: string;
   description: string;
 }

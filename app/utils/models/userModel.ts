@@ -5,7 +5,7 @@ const noteItemSchema = new Schema({
   // id: {
   //   type: Number,
   //   required: true,
-  // },
+  // },  //use the mongoDB id
   title: {
     type: String,
     required: true,

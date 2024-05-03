@@ -52,7 +52,7 @@ export default function NotePage() {
         <button
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           onClick={saveNotes}
-          // Here you will add the logic to save/update the note
+         
         >
           Save
         </button>

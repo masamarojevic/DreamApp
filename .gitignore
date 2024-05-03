@@ -1,0 +1,14 @@
+# Dependency directories
+node_modules/
+
+# Environment configuration files
+.env
+.env.local
+
+# Next.js build output
+.next/
+.next/cache/
+
+# Other common ignore patterns
+.DS_Store
+*.log
