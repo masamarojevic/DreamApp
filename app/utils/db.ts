@@ -1,3 +1,4 @@
+import { MongoDBCollectionNamespace } from "mongodb";
 import mongoose from "mongoose";
 
 if (!process.env.MONGODB_URI) {
@@ -20,6 +21,7 @@ export async function dbConnect(): Promise<typeof mongoose> {
     });
 
     console.log("CONNECTED TO DATABASE");
+    console.log("Connected to:", mongoose.connection.name);
 
     return db;
   } catch (err) {
