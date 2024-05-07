@@ -3,6 +3,7 @@ import { dbConnect } from "../../../utils/db";
 import { UserModel } from "../../../utils/models/userModel";
 import mongoose from "mongoose";
 import { User, noteItem } from "../../../utils/models/types/user";
+import jwt from "jsonwebtoken";
 
 export async function GET(request: NextRequest) {
   await dbConnect();
@@ -62,3 +63,46 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+// const body = await request.json();
+//     const { title, description } = body;
+
+//     const user: User | null = await UserModel.findOneAndUpdate({
+//       "notes._id": new mongoose.Types.ObjectId(noteId),
+//     });
+
+//     if (!user) {
+//       return new NextResponse(JSON.stringify({ message: "Note not found" }), {
+//         status: 404,
+//         headers: { "Content-Type": "application/json" },
+//       });
+//     }
+
+//     Find the note within the user's notes and update it
+//     const note: noteItem | undefined = user.notes.find(
+//       (note) => note._id.toString() === noteId
+//     );
+
+//     if (!note) {
+//       return new NextResponse(JSON.stringify({ message: "Note not found" }), {
+//         status: 404,
+//         headers: { "Content-Type": "application/json" },
+//       });
+//     }
+//     note.title = title
+//     note.description = description
+
+//     return new NextResponse(JSON.stringify({ note }), {
+//       status: 200,
+//       headers: { "Content-Type": "application/json" },
+//     });
+
+//   }catch(error){
+//     console.error("Error updating note:", error);
+//     return new NextResponse(
+//       JSON.stringify({ message: "Server error", error }),
+//       {
+//         status: 500,
+//         headers: { "Content-Type": "application/json" },
+//       }
+//     );
