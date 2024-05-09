@@ -2,8 +2,27 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { noteItem } from "../../utils/models/types/user";
+
+import { usePathname } from "next/navigation";
 export default function HomePage() {
   const [notes, setNotes] = useState<noteItem[]>([]);
+  const [search, setSearch] = useState("");
+  const [select, setSelect] = useState<noteItem | null>(null);
+
+  const handleSelect = (dream: noteItem) => {
+    setSelect(dream);
+    setSearch(""); //after selecting empty the input
+  };
+  const removeSelected = () => {
+    setSelect(null);
+  };
+
+  const pathname = usePathname();
+  const getIdFromPath = () => {
+    const paths = pathname.split("/");
+    return paths[paths.length - 1];
+  };
+  const noteId = getIdFromPath();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,9 +57,44 @@ export default function HomePage() {
         <div className="flex justify-between items-center mb-6">
           <input
             type="search"
-            placeholder="search for dream"
+            value={search}
+            placeholder="search for dream note"
+            onChange={(e) => setSearch(e.target.value)}
             className="px-4 py-2 border rounded-lg w-full max-w-md"
           />
+          {search.length > 0 && (
+            <ul className="absolute bg-white border border-gray-300 rounded-lg mt-1 max-h-60 overflow-auto z-10">
+              {notes
+                .filter(
+                  (note) =>
+                    note.title.toLowerCase().includes(search.toLowerCase()) ||
+                    note.description
+                      .toLowerCase()
+                      .includes(search.toLowerCase())
+                )
+                .map((note, index) => (
+                  <li
+                    key={index}
+                    className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleSelect(note)}
+                  >
+                    {note.title}
+                  </li>
+                ))}
+            </ul>
+          )}
+          {select && (
+            <div className="relative border p-4 rounded-lg mt-4">
+              <button
+                onClick={removeSelected}
+                className="absolute top-0 right-0 p-1 text-xl font-bold hover:text-red-600"
+              >
+                &times;
+              </button>
+              <h2>{select.title}</h2>
+              <p>{select.description}</p>
+            </div>
+          )}
 
           <Link href="/pages/notePage">
             <button className="px-6 py-2 bg-white rounded-lg shadow">
