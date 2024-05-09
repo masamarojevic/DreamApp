@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import { User, noteItem } from "../../../utils/models/types/user";
 import jwt from "jsonwebtoken";
 
-export async function PUT(request: NextRequest) {
+export async function DELETE(request: NextRequest) {
   await dbConnect();
   const urlPath = request.nextUrl.pathname;
   const noteId = urlPath.split("/").pop();
@@ -30,40 +30,31 @@ export async function PUT(request: NextRequest) {
         }
       );
     }
-    const { title, description } = await request.json();
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
       userId: string;
     };
-    const user = await UserModel.findOne({
-      _id: decoded.userId,
-      "notes._id": noteId,
-    });
 
-    if (!user) {
+    const result = await UserModel.findOneAndUpdate(
+      { _id: decoded.userId, "notes._id": noteId },
+      { $pull: { notes: { _id: noteId } } },
+      { new: true }
+    );
+
+    if (!result) {
       return new NextResponse(JSON.stringify({ message: "Note not found" }), {
         status: 404,
         headers: { "Content-Type": "application/json" },
       });
     }
 
-    const note = user.notes.id(noteId);
-
-    if (!note) {
-      return new NextResponse(JSON.stringify({ message: "Note not found" }), {
-        status: 404,
+    return new NextResponse(
+      JSON.stringify({ message: "Note deleted successfully" }),
+      {
+        status: 200,
         headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    note.title = title;
-    note.description = description;
-
-    await user.save();
-
-    return new NextResponse(JSON.stringify({ note }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+      }
+    );
   } catch (error) {
     console.log(error);
     return new NextResponse(

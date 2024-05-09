@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { noteItem } from "../../../utils/models/types/user";
 import { DreamItem } from "../../../utils/models/types/dream";
+import { useRouter } from "next/navigation";
 
 export default function ViewNote() {
   // const [loading, setLoading] = useState(true);
@@ -11,6 +12,7 @@ export default function ViewNote() {
   const [dreams, setDreams] = useState<DreamItem[]>([]);
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState<DreamItem | null>(null);
+  const router = useRouter();
 
   //const[editNote,setEditNote]=useState(false)
   const [edit, setEdit] = useState(false);
@@ -130,6 +132,23 @@ export default function ViewNote() {
       .catch((error) => console.error("Error updating note:", error));
   };
 
+  const DeleteNote = async () => {
+    try {
+      const response = await fetch(`/api/deleteNote/${noteId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("failed to delete note");
+      }
+      router.push("/pages/homePage");
+    } catch (error) {
+      console.error("error deleting note", error);
+    }
+  };
+
   if (!note) {
     return <p>No note found or loading...</p>;
   }
@@ -194,7 +213,7 @@ export default function ViewNote() {
             <h1>{note.title}</h1>
             <h2>{note.description}</h2>
             <button onClick={() => setEdit(true)}>Edit</button>
-            <button>Delete</button>
+            <button onClick={DeleteNote}>Delete</button>
           </>
         )}
       </div>
