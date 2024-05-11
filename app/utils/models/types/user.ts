@@ -10,4 +10,10 @@ export interface noteItem {
   title: string;
   description: string;
   date: Date;
+  emotions: Emotions[];
+}
+
+export interface Emotions {
+  emotion: string;
+  color: string;
 }

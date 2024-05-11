@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
   await dbConnect();
 
   try {
-    const { title, description, token } = await request.json();
+    const { title, description, emotions, token } = await request.json();
 
     if (!title || !description) {
       return new NextResponse(
@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
       title,
       description,
       date: new Date(),
+      emotions,
     };
     user.notes.push(newNote);
     console.log(newNote);

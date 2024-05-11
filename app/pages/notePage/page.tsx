@@ -1,11 +1,97 @@
 "use client";
+
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import React from "react";
+import Select, {
+  StylesConfig,
+  SingleValue,
+  OptionProps,
+  GroupBase,
+  components,
+  Props as SelectProps,
+} from "react-select";
+import chroma from "chroma-js";
+
+interface Options {
+  value: string;
+  name: string;
+  color: string;
+}
+
+// const dot = (color = "transparent") => ({
+//   alignItems: "center",
+//   display: "flex",
+
+//   ":before": {
+//     backgroundColor: color,
+//     borderRadius: "50%",
+//     content: '" "',
+//     display: "block",
+//     marginRight: 8,
+//     height: 10,
+//     width: 10,
+//   },
+// });
+
+//CUSTOM STYLE
+const customStyles: StylesConfig<Options, false> = {
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: "white",
+    width: 300,
+    borderColor: "gray",
+  }),
+  option: (styles, { data, isFocused }) => ({
+    ...styles,
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: isFocused ? chroma(data.color).alpha(0.1).css() : "white",
+    color: chroma(data.color).luminance() < 0.5 ? "black" : "gray",
+    paddingLeft: 30,
+    ":before": {
+      backgroundColor: data.color,
+      borderRadius: "50%",
+      content: '" "',
+      display: "block",
+      marginRight: 8,
+      height: 10,
+      width: 10,
+    },
+  }),
+  singleValue: (styles, { data }) => ({
+    ...styles,
+    display: "flex",
+    alignItems: "center",
+    color: "black",
+    paddingLeft: 5,
+    ":before": {
+      backgroundColor: data.color,
+      borderRadius: "50%",
+      content: '" "',
+      display: "block",
+      marginRight: 8,
+      height: 10,
+      width: 10,
+    },
+  }),
+};
 
 export default function NotePage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [selectedColor, setSelectedColor] = useState<Options | null>(null);
+
+  const colors: Options[] = [
+    { value: "Black", name: "Fear", color: "#000000" },
+    { value: "Red", name: "Impulsivity", color: "#FF0000" },
+    { value: "Green", name: "Fertility", color: "#008000" },
+  ];
+
+  const handleChange: SelectProps<Options, false>["onChange"] = (newValue) => {
+    setSelectedColor(newValue as Options);
+  };
 
   const saveNotes = async () => {
     const token = localStorage.getItem("token");
@@ -14,13 +100,25 @@ export default function NotePage() {
       return;
     }
     try {
+      const noteData = {
+        title,
+        description,
+        emotions: selectedColor
+          ? [
+              {
+                emotion: selectedColor.name,
+                color: selectedColor.color,
+              },
+            ]
+          : [],
+      };
       const response = await fetch("/api/addNote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ token, title, description }),
+        body: JSON.stringify({ token, ...noteData, title, description }),
       });
       if (response.ok) {
         router.push("/pages/homePage");
@@ -56,9 +154,26 @@ export default function NotePage() {
         >
           Save
         </button>
-        <button className="px-6 py-1 m-2 bg-white rounded-lg shadow">
+        <h1>What was this dream emotion?</h1>
+        <Select
+          defaultValue={selectedColor}
+          value={selectedColor}
+          onChange={handleChange}
+          options={colors}
+          styles={customStyles}
+          getOptionLabel={(option) => `${option.name}`}
+        />
+        {/* <div>
+          <select value={""}>Choose dream emotion</select>
+         {colors.map((color,index) => (
+          <option key={index} value={color.name} style={color: colour.code}>
+
+          </option>
+         ))}
+        </div> */}
+        {/* <button className="px-6 py-1 m-2 bg-white rounded-lg shadow">
           Choose dream colour
-        </button>
+        </button> */}
       </div>
     </div>
   );

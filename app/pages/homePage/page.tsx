@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { noteItem } from "../../utils/models/types/user";
+import { noteItem, Emotions } from "../../utils/models/types/user";
 import { usePathname } from "next/navigation";
+
 //import useModalSort from "../../modals/sortModal";
 
 //so it did not work by some reason to import the component but using it directly here it works
@@ -167,6 +168,7 @@ export default function HomePage() {
                 ))}
             </ul>
           )}
+
           {/* {select && (
             <div className="relative border p-4 rounded-lg mt-4">
               <button
@@ -189,6 +191,9 @@ export default function HomePage() {
           <button className="px-6 py-2 bg-white rounded-lg shadow">
             profile
           </button>
+        </div>
+        <div>
+          <h1> Going to sleep?</h1>
         </div>
 
         <div className="overflow-auto h-[80vh] p-2 bg-white rounded-lg shadow">
@@ -231,13 +236,37 @@ export default function HomePage() {
                     href={`/pages/viewNote/${note._id.toString()}`}
                   >
                     <div
-                      className={`p-4 border rounded-lg bg-gray-200 shadow-md cursor-pointer transition-colors duration-400 ${
+                      className={`p-2 border rounded-lg bg-gray-200 shadow-md cursor-pointer transition-colors duration-400 ${
                         select && select._id === note._id ? "bg-blue-200" : ""
                       }`}
                     >
-                      <h1>{new Date(note.date).toLocaleString()}</h1>
-                      <h5 className="text-lg font-bold mb-2">{note.title}</h5>
-                      <p className="text-sm">{note.description}</p>
+                      {" "}
+                      <div>
+                        {note.emotions.map((emotion, index) => (
+                          <div key={index} className="flex items-center mb-2">
+                            <span
+                              style={{
+                                display: "inline-block",
+                                height: "10px",
+                                width: "10px",
+                                borderRadius: "50%",
+                                backgroundColor: emotion.color,
+                                marginRight: "8px",
+                              }}
+                            />
+                            {/* <span>{emotion.color}</span> */}
+                            <h1 className="text-xs">
+                              {new Date(note.date).toDateString()}
+                            </h1>
+                          </div>
+                        ))}
+                      </div>
+                      <h5 className="text-lg font-bold mb-2 text-ellipsis overflow-hidden whitespace-nowrap max-w-[200px]">
+                        {note.title}
+                      </h5>
+                      <p className="text-sm text-ellipsis overflow-hidden whitespace-nowrap max-w-[200px]">
+                        {note.description}
+                      </p>
                     </div>
                   </Link>
                 );

@@ -1,6 +1,15 @@
 import { User } from "./types/user";
 import mongoose, { Schema } from "mongoose";
 
+const emotionSchema = new Schema({
+  emotion: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
+});
+
 const noteItemSchema = new Schema({
   title: {
     type: String,
@@ -13,6 +22,7 @@ const noteItemSchema = new Schema({
   date: {
     type: Date,
   },
+  emotions: [emotionSchema],
 });
 
 const userSchema = new Schema<User>(
