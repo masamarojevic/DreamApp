@@ -48,8 +48,10 @@ export async function POST(request: NextRequest) {
     const newNote = {
       title,
       description,
+      date: new Date(),
     };
     user.notes.push(newNote);
+    console.log(newNote);
 
     await user.save();
     return new NextResponse(

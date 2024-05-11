@@ -9,4 +9,5 @@ export interface noteItem {
   _id: Types.ObjectId;
   title: string;
   description: string;
+  date: Date;
 }

@@ -49,12 +49,15 @@ export default function NotePage() {
           onChange={(e) => setDescription(e.target.value)}
           className="w-full p-2 h-40 border border-gray-300 rounded"
         ></textarea>
+
         <button
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           onClick={saveNotes}
-         
         >
           Save
+        </button>
+        <button className="px-6 py-1 m-2 bg-white rounded-lg shadow">
+          Choose dream colour
         </button>
       </div>
     </div>

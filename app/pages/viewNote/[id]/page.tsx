@@ -38,6 +38,10 @@ export default function ViewNote() {
     return paths[paths.length - 1];
   };
 
+  const returnHome = () => {
+    router.push("/pages/homePage");
+  };
+
   const noteId = getIdFromPath();
 
   const filterDreams =
@@ -69,26 +73,6 @@ export default function ViewNote() {
         }
       }
     };
-
-    // const editNote = async () => {
-    //   if (noteId) {
-    //     try {
-    //       const response = await fetch(`/api/editNote/${noteId}`, {
-    //         headers: {
-    //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //         },
-    //       });
-
-    //       if (!response.ok) {
-    //         throw new Error("Failet to edit note");
-    //       }
-    //       const data = await response.json();
-    //       setNote(data.note);
-    //     } catch (error) {
-    //       console.log("error fetching note:", error);
-    //     }
-    //   }
-    // };
 
     const getDreams = async () => {
       try {
@@ -143,7 +127,7 @@ export default function ViewNote() {
       if (!response.ok) {
         throw new Error("failed to delete note");
       }
-      router.push("/pages/homePage");
+      returnHome();
     } catch (error) {
       console.error("error deleting note", error);
     }
@@ -205,15 +189,44 @@ export default function ViewNote() {
               onChange={(e) => setEditDescription(e.target.value)}
               className="w-full h-32 p-2 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
             />
-            <button onClick={editNote}>Save</button>
-            <button onClick={() => setEdit(false)}>Cancel</button>
+            <button
+              onClick={editNote}
+              className="px-6 py-2 bg-white rounded-lg shadow"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => setEdit(false)}
+              className="px-6 py-2 bg-white rounded-lg shadow"
+            >
+              Cancel
+            </button>
           </>
         ) : (
           <>
-            <h1>{note.title}</h1>
-            <h2>{note.description}</h2>
-            <button onClick={() => setEdit(true)}>Edit</button>
-            <button onClick={DeleteNote}>Delete</button>
+            <div className="p-4 border rounded-lg bg-gray-200 shadow-md">
+              <h3>{new Date(note.date).toLocaleString()}</h3>
+              <h1>{note.title}</h1>
+              <p>{note.description}</p>
+            </div>
+            <button
+              onClick={() => setEdit(true)}
+              className="px-6 py-2 bg-white rounded-lg shadow"
+            >
+              Edit
+            </button>
+            <button
+              onClick={DeleteNote}
+              className="px-6 py-2 bg-white rounded-lg shadow"
+            >
+              Delete
+            </button>
+            <button
+              onClick={returnHome}
+              className="px-6 py-2 bg-white rounded-lg shadow"
+            >
+              Home
+            </button>
           </>
         )}
       </div>

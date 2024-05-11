@@ -2,10 +2,6 @@ import { User } from "./types/user";
 import mongoose, { Schema } from "mongoose";
 
 const noteItemSchema = new Schema({
-  // id: {
-  //   type: Number,
-  //   required: true,
-  // },  //use the mongoDB id
   title: {
     type: String,
     required: true,
@@ -13,6 +9,9 @@ const noteItemSchema = new Schema({
   description: {
     type: String,
     required: true,
+  },
+  date: {
+    type: Date,
   },
 });
 
