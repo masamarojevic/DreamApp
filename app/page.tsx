@@ -5,7 +5,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-
   const router = useRouter();
 
   //FORM
@@ -51,26 +50,22 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-r from-gray-300 via-white to-gray-300">
-    
+    <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 ">
       <img
         src="/clouds.png"
         className="absolute z-0 w-full bottom-0"
         alt="Cloud"
-        style={{ maxWidth: "150%" }} 
+        style={{ maxWidth: "150%" }}
       />
 
       <div className="z-10">
-
-        <h1 className="text-5xl font-bold text-center mb-8 text-gray-800">
+        <h1 className="text-5xl font-bold text-center mb-8 text-white   ">
           DreamCatch
         </h1>
 
         <div className="max-w-md w-full shadow-xl rounded-2xl p-8 border-4 border-white bg-gray-200">
-
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col">
-
               <label
                 htmlFor="email"
                 className="mb-2 text-sm font-medium text-gray-700"
@@ -87,7 +82,6 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col">
-
               <label
                 htmlFor="password"
                 className="mb-2 text-sm font-medium text-gray-700"
@@ -102,7 +96,7 @@ export default function Home() {
                 placeholder="password:"
               />
             </div>
-            
+
             <div className="flex justify-center">
               <button
                 type="submit"

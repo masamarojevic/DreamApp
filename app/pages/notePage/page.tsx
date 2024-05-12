@@ -137,28 +137,36 @@ export default function NotePage() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gray-300 via-white to-gray-300 min-h-screen p-4 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <input
-          type="text"
-          placeholder="Note title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-        />
-        <textarea
-          placeholder="Note description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full p-2 h-40 border border-gray-300 rounded"
-        ></textarea>
-
+    <div className="relative min-h-screen p-4 flex justify-center items-center bg-black">
+      <div className="relative z-10 bg-gradient-to-br from-blue-300 via-purple-600 to-blue-400 p-6 rounded-lg shadow-lg">
         <button
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={saveNotes}
+          onClick={() => router.push("/pages/homePage")}
+          className="absolute top-0 right-3 py-2 px-4 text-white rounded-full hover:bg-red-500"
+          style={{ marginTop: "1rem" }}
         >
-          Save
+          &times;
         </button>
+        <div className="mt-12">
+          <input
+            type="text"
+            placeholder="Note title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-2 mb-4 border border-gray-300 rounded"
+          />
+          <textarea
+            placeholder="Note description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-2 h-40 border border-gray-300 rounded"
+          ></textarea>
+        </div>
+
+        {/* <img
+          src="/clouds.png"
+          className="absolute right-5 bottom-1 top-56 w-1/2 h-auto object-cover z-0"
+          alt="Cloud"
+        /> */}
         <h1>What was this dream emotion?</h1>
         <Select
           defaultValue={selectedColor}
@@ -168,6 +176,12 @@ export default function NotePage() {
           styles={customStyles}
           getOptionLabel={(option) => `${option.name}`}
         />
+        <button
+          className="absolute bottom-0 right-3 m-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={saveNotes}
+        >
+          Save
+        </button>
         {/* <div>
           <select value={""}>Choose dream emotion</select>
          {colors.map((color,index) => (

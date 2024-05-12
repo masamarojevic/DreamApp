@@ -137,98 +137,100 @@ export default function ViewNote() {
     return <p>No note found or loading...</p>;
   }
   return (
-    <div>
-      <input
-        type="search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="search for dream meaning"
-        className="px-4 py-2 border rounded-lg w-full max-w-md"
-      />
-      {search.length > 0 && (
-        <ul className="absolute bg-white border border-gray-300 rounded-lg mt-1 max-h-60 overflow-auto z-10">
-          {dreams
-            .filter(
-              (dream) =>
-                dream.title.toLowerCase().includes(search.toLowerCase()) ||
-                dream.meaning.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((dream, index) => (
-              <li
-                key={index}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleSelect(dream)}
-              >
-                {dream.title}
-              </li>
-            ))}
-        </ul>
-      )}
-      {select && (
-        <div className="relative border p-4 rounded-lg mt-4">
-          <button
-            onClick={removeSelected}
-            className="absolute top-0 right-0 p-1 text-xl font-bold hover:text-red-600"
-          >
-            &times;
-          </button>
-          <h2>{select.title}</h2>
-          <p>{select.meaning}</p>
-        </div>
-      )}
-      <div>
-        {edit ? (
-          <>
-            <input
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              className="w-full p-2 m-3 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-            />
-            <textarea
-              value={editDescription}
-              onChange={(e) => setEditDescription(e.target.value)}
-              className="w-full h-32 p-2 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-            />
-            <button
-              onClick={editNote}
-              className="px-6 py-2 bg-white rounded-lg shadow"
-            >
-              Save
-            </button>
-            <button
-              onClick={() => setEdit(false)}
-              className="px-6 py-2 bg-white rounded-lg shadow"
-            >
-              Cancel
-            </button>
-          </>
-        ) : (
-          <>
-            <div className="p-4 border rounded-lg bg-gray-200 shadow-md">
-              <h3>{new Date(note.date).toLocaleString()}</h3>
-              <h1>{note.title}</h1>
-              <p>{note.description}</p>
-            </div>
-            <button
-              onClick={() => setEdit(true)}
-              className="px-6 py-2 bg-white rounded-lg shadow"
-            >
-              Edit
-            </button>
-            <button
-              onClick={DeleteNote}
-              className="px-6 py-2 bg-white rounded-lg shadow"
-            >
-              Delete
-            </button>
-            <button
-              onClick={returnHome}
-              className="px-6 py-2 bg-white rounded-lg shadow"
-            >
-              Home
-            </button>
-          </>
+    <div className="relative min-h-screen p-4 flex justify-center items-center bg-black">
+      <div className="relative z-10 bg-gradient-to-br from-blue-300 via-purple-600 to-blue-400 p-6 rounded-lg shadow-lg">
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="search for dream meaning"
+          className="px-4 py-2 border rounded-lg w-full max-w-md"
+        />
+        {search.length > 0 && (
+          <ul className="absolute bg-white border border-gray-300 rounded-lg mt-1 max-h-60 overflow-auto z-10">
+            {dreams
+              .filter(
+                (dream) =>
+                  dream.title.toLowerCase().includes(search.toLowerCase()) ||
+                  dream.meaning.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((dream, index) => (
+                <li
+                  key={index}
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleSelect(dream)}
+                >
+                  {dream.title}
+                </li>
+              ))}
+          </ul>
         )}
+        {select && (
+          <div className="relative border p-4 rounded-lg mt-4">
+            <button
+              onClick={removeSelected}
+              className="absolute top-0 right-0 p-1 text-xl font-bold hover:text-red-600"
+            >
+              &times;
+            </button>
+            <h2>{select.title}</h2>
+            <p>{select.meaning}</p>
+          </div>
+        )}
+        <div>
+          {edit ? (
+            <>
+              <input
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                className="w-full p-2 m-3 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+              />
+              <textarea
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                className="w-full h-32 p-2 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+              />
+              <button
+                onClick={editNote}
+                className="px-6 py-2 bg-white rounded-lg shadow"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEdit(false)}
+                className="px-6 py-2 bg-white rounded-lg shadow"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="container mx-auto  p-20 border rounded-lg bg-gray-200 shadow-md">
+                <h3>{new Date(note.date).toLocaleString()}</h3>
+                <h1>{note.title}</h1>
+                <p>{note.description}</p>
+              </div>
+              <button
+                onClick={() => setEdit(true)}
+                className="px-6 py-2 bg-white rounded-lg shadow"
+              >
+                Edit
+              </button>
+              <button
+                onClick={DeleteNote}
+                className="px-6 py-2 bg-white rounded-lg shadow"
+              >
+                Delete
+              </button>
+              <button
+                onClick={returnHome}
+                className="px-6 py-2 bg-white rounded-lg shadow"
+              >
+                Home
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

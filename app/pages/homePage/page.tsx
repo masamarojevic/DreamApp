@@ -146,7 +146,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gray-300 via-white to-gray-300 min-h-screen p-4">
+    <div className="bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 min-h-screen p-4">
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-6">
           <input
@@ -199,7 +199,7 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="overflow-auto h-[80vh] p-2 bg-gray-600 rounded-lg shadow m-10">
+        <div className="overflow-auto h-[80vh] p-2 bg-gradient-to-br from-gray-900 via-purple-700 to-gray-600 rounded-lg shadow m-10">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <button
@@ -254,7 +254,7 @@ export default function HomePage() {
                     href={`/pages/viewNote/${note._id.toString()}`}
                   >
                     <div
-                      className={`p-2 border rounded-lg bg-gray-300 shadow-md cursor-pointer transition-colors duration-400 ${
+                      className={`p-2 border rounded-lg bg-slate-300 text-black shadow-md cursor-pointer transition-colors duration-400 ${
                         select && select._id === note._id ? "bg-blue-300" : ""
                       }`}
                     >

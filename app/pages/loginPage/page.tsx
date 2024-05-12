@@ -47,13 +47,12 @@ export default function Page() {
     }
   };
   return (
-    <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-r from-gray-300 via-white to-gray-300">
-    
+    <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 ">
       <img
         src="/clouds.png"
         className="absolute z-0 w-full bottom-0"
         alt="Cloud"
-        style={{ maxWidth: "150%" }} 
+        style={{ maxWidth: "150%" }}
       />
 
       <div className="z-10">
