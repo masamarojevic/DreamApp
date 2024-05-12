@@ -84,9 +84,14 @@ export default function NotePage() {
   const [selectedColor, setSelectedColor] = useState<Options | null>(null);
 
   const colors: Options[] = [
-    { value: "Black", name: "Fear", color: "#000000" },
-    { value: "Red", name: "Impulsivity", color: "#FF0000" },
-    { value: "Green", name: "Fertility", color: "#008000" },
+    { value: "Black", name: "Fear", color: "#363636" },
+    { value: "Red", name: "Impulsivity", color: "#FF6B4B" },
+    { value: "Green", name: "Fertility", color: "#82F474" },
+    { value: "Purple", name: "Vivid", color: "#CF9FFF" },
+    { value: "Orange", name: "Vibrancy", color: "#F09E30" },
+    { value: "Yellow", name: "Creativity", color: "#F4F25E" },
+    { value: "Pink", name: "Romance", color: "#FFC0CB" },
+    { value: "Blue", name: "Sensitivity", color: "#5ED2F4" },
   ];
 
   const handleChange: SelectProps<Options, false>["onChange"] = (newValue) => {

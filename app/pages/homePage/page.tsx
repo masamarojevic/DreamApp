@@ -182,62 +182,64 @@ export default function HomePage() {
             </div>
           )} */}
 
-          <Link href="/pages/notePage">
+          <Link href={"/pages/profilePage"}>
             <button className="px-6 py-2 bg-white rounded-lg shadow">
-              new
+              profile
             </button>
           </Link>
-
-          <button className="px-6 py-2 bg-white rounded-lg shadow">
-            profile
-          </button>
-        </div>
-        <div>
-          <h1> Going to sleep?</h1>
         </div>
 
-        <div className="overflow-auto h-[80vh] p-2 bg-white rounded-lg shadow">
-          <button
-            onClick={openModal}
-            className="px-6 py-1 m-2 bg-white rounded-lg shadow"
-          >
-            Sort
-          </button>
-          {modalOptions.isOpen && (
-            <div>
+        <div className="overflow-auto h-[80vh] p-2 bg-gray-600 rounded-lg shadow m-10">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
               <button
-                onClick={() => selectModal(SortByOrder.NewToOld)}
-                className="px-6 py-1 m-2 bg-white rounded-lg shadow"
+                onClick={openModal}
+                className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow "
               >
-                Newest to Oldest
+                sort
               </button>
-              <button
-                onClick={() => selectModal(SortByOrder.OldToNew)}
-                className="px-6 py-1 m-2 bg-white rounded-lg shadow"
-              >
-                Oldest to Newest
-              </button>
-              <button
-                onClick={closeModal}
-                className="px-6 py-1 m-2 bg-white rounded-lg shadow"
-              >
-                &times;
-              </button>
+              {modalOptions.isOpen && (
+                <div className="flex ">
+                  <button
+                    onClick={() => selectModal(SortByOrder.NewToOld)}
+                    className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                  >
+                    Newest to Oldest
+                  </button>
+                  <button
+                    onClick={() => selectModal(SortByOrder.OldToNew)}
+                    className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                  >
+                    Oldest to Newest
+                  </button>
+                  <button
+                    onClick={closeModal}
+                    className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                  >
+                    &times;
+                  </button>
+                </div>
+              )}
             </div>
-          )}
 
-          <div className="grid grid-cols-3 gap-5">
+            <Link href="/pages/notePage">
+              <button className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow">
+                new
+              </button>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-3 gap-10 p-15 pl-10 pr-10 pt-10 ml-5 mr-5">
             {notes.length > 0 ? (
               notes.map((note) => {
-                console.log("Rendering note with ID:", note._id);
                 return (
                   <Link
                     key={note._id.toString()}
                     href={`/pages/viewNote/${note._id.toString()}`}
                   >
                     <div
-                      className={`p-2 border rounded-lg bg-gray-200 shadow-md cursor-pointer transition-colors duration-400 ${
-                        select && select._id === note._id ? "bg-blue-200" : ""
+                      className={`p-2 border rounded-lg bg-gray-300 shadow-md cursor-pointer transition-colors duration-400 ${
+                        select && select._id === note._id ? "bg-blue-300" : ""
                       }`}
                     >
                       {" "}
@@ -254,7 +256,7 @@ export default function HomePage() {
                                 marginRight: "8px",
                               }}
                             />
-                            {/* <span>{emotion.color}</span> */}
+
                             <h1 className="text-xs">
                               {new Date(note.date).toDateString()}
                             </h1>
