@@ -134,6 +134,16 @@ export default function HomePage() {
     console.log("Notes sorted:", sorted);
     setNotes(sorted); // Update the notes state with the sorted notes
   };
+  const sortNotesEmotions = () => {
+    const colorSorted = [...notes].sort((a, b) => {
+      const colorA = a.emotions[0]?.color.toUpperCase();
+      const colorB = b.emotions[0]?.color.toUpperCase();
+      if (colorA < colorB) return -1;
+      if (colorA > colorB) return 1;
+      return 0;
+    });
+    setNotes(colorSorted);
+  };
 
   return (
     <div className="bg-gradient-to-r from-gray-300 via-white to-gray-300 min-h-screen p-4">
@@ -204,13 +214,19 @@ export default function HomePage() {
                     onClick={() => selectModal(SortByOrder.NewToOld)}
                     className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
                   >
-                    Newest to Oldest
+                    newest to oldest
                   </button>
                   <button
                     onClick={() => selectModal(SortByOrder.OldToNew)}
                     className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
                   >
-                    Oldest to Newest
+                    oldest to newest
+                  </button>
+                  <button
+                    onClick={sortNotesEmotions}
+                    className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                  >
+                    emotions
                   </button>
                   <button
                     onClick={closeModal}
