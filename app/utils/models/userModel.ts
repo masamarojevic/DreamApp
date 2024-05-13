@@ -40,6 +40,10 @@ const userSchema = new Schema<User>(
       type: [noteItemSchema],
       default: [],
     },
+    username: {
+      type: String,
+      default: "",
+    },
   },
   { strict: true }
 );

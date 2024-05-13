@@ -40,3 +40,54 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+export async function PUT(request: NextRequest) {
+  await dbConnect();
+  try {
+    const token = request.headers.get("authorization")?.split(" ")[1];
+    if (!token) {
+      return new NextResponse(
+        JSON.stringify({ message: "Token is required" }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // Verify the token and extract the user ID
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      userId: string;
+    };
+    const userId = decoded.userId;
+
+    const { username } = await request.json();
+    console.log("Updating user with ID:", userId);
+    console.log("New username:", username);
+
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { $set: { username: username } },
+      { new: true }
+    );
+    if (!user) {
+      return new NextResponse(JSON.stringify({ message: "User not found" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    console.log("Updated user:", user);
+
+    // user.username = username;
+
+    // await user.save();
+
+    return new NextResponse(JSON.stringify({ user: user }));
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { message: "Error getting user info", error },
+      { status: 500 }
+    );
+  }
+}

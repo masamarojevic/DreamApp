@@ -4,6 +4,7 @@ export interface User {
   email: string;
   password: string;
   notes: noteItem[];
+  username?: string;
 }
 export interface noteItem {
   _id: Types.ObjectId;
