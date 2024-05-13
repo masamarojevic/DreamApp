@@ -1,6 +1,16 @@
 import { User } from "./types/user";
 import mongoose, { Schema } from "mongoose";
 
+const sleepSchema = new Schema({
+  quality: {
+    type: String,
+    enum: ["bad", "average", "good"],
+  },
+  duration: {
+    type: Number,
+  },
+});
+
 const emotionSchema = new Schema({
   emotion: {
     type: String,
@@ -43,6 +53,10 @@ const userSchema = new Schema<User>(
     username: {
       type: String,
       default: "",
+    },
+    sleepPatern: {
+      type: [sleepSchema],
+      default: [],
     },
   },
   { strict: true }

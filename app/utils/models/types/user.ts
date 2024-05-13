@@ -5,6 +5,7 @@ export interface User {
   password: string;
   notes: noteItem[];
   username?: string;
+  sleepPatern: Sleep[];
 }
 export interface noteItem {
   _id: Types.ObjectId;
@@ -18,3 +19,14 @@ export interface Emotions {
   emotion: string;
   color: string;
 }
+
+export interface Sleep {
+  quality: "bad" | "avarage" | "good"; //enum
+  duration: Number;
+}
+
+// export interface Quality {
+//   bad: String;
+//   avarage: String;
+//   good: String;
+// }

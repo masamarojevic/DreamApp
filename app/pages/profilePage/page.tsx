@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { User } from "../../utils/models/types/user";
 import { UserModel } from "../../utils/models/userModel";
+import { Sleep } from "../../utils/models/types/user";
 export default function ProfilePage() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [timerStart, setTimerStart] = useState<Date | null>(null);
@@ -74,30 +75,97 @@ export default function ProfilePage() {
     }
   };
 
+  const submitSleep = async (sleepData: Sleep) => {
+    try {
+      const token = localStorage.getItem("token");
+      console.log("token", token);
+
+      if (token) {
+        const response = await fetch("/api/saveSleep", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sleepData),
+        });
+        const data = await response.json();
+        console.log("data is", data);
+        if (!response.ok) {
+          throw new Error(data.message || "failed to save sleep");
+        }
+        console.log("sleep saved", data);
+      }
+    } catch (error) {
+      console.error("Error with saving sleep ");
+    }
+  };
+
   //timer
   const startTimer = () => {
     setIsTimerRunning(true);
     setTimerStart(new Date());
   };
   const stopTimer = () => {
-    //timer shoul not be null when calc
     if (timerStart) {
-      const duration = new Date().getTime() - timerStart.getTime();
-      setTimerStop(duration);
+      const durationInMSeconds = Math.floor(
+        new Date().getTime() - timerStart.getTime()
+      );
+
+      const durationInSeconds = Math.floor(durationInMSeconds / 1000);
+      // const hours = durationInSeconds / 3600;
+      // let quality: "bad" | "avarage" | "good" = "bad"; //bad is default
+
+      // if (hours < 4) {
+      //   quality = "bad";
+      // } else if (hours >= 4 && hours <= 7) {
+      //   quality = "avarage";
+      // } else if (hours > 7) {
+      //   quality = "good";
+      // }
+
+      // const sleepData: Sleep = {
+      //   quality,
+      //   duration: durationInSeconds,
+      // };
+      // console.log("sleep data:", sleepData);
+      // submitSleep(sleepData);
+      setTimerStop(durationInSeconds);
       setIsTimerRunning(false);
     }
   };
+
+  const handleSubmit = () => {
+    if (timerStop !== null) {
+      const hours = timerStop / 3600;
+      let quality: "bad" | "avarage" | "good" = "bad"; //bad is default
+
+      if (hours < 4) {
+        quality = "bad";
+      } else if (hours >= 4 && hours <= 7) {
+        quality = "avarage";
+      } else if (hours > 7) {
+        quality = "good";
+      }
+      const sleepData: Sleep = {
+        quality,
+        duration: timerStop,
+      };
+      submitSleep(sleepData);
+      setTimerStop(null);
+    }
+  };
   //display timer
-  function timer(duration: number) {
-    const hours = Math.floor(duration / (1000 * 60 * 60));
-    const minutes = Math.floor((duration / (1000 * 60)) % 60);
-    const second = Math.floor((duration / 1000) % 60);
+  function timer(seconds: number): string {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secondsRemaining = seconds % 60;
 
-    const hoursPad = hours < 10 ? "0" + hours : hours;
-    const minutesPad = minutes < 10 ? "0" + minutes : minutes;
-    const secondsPad = second < 10 ? "0" + second : second;
-
-    return `${hoursPad}:${minutesPad}:${secondsPad}`;
+    return [
+      hours.toString().padStart(2, "0"),
+      minutes.toString().padStart(2, "0"),
+      secondsRemaining.toString().padStart(2, "0"),
+    ].join(":");
   }
 
   useEffect(() => {
@@ -177,7 +245,12 @@ export default function ProfilePage() {
         {!isTimerRunning && timerStop !== null && (
           <p>Your sleep session: {timer(timerStop)}</p>
         )}
-        <button className="px-6 py-2 bg-white rounded-lg shadow">Save</button>
+        <button
+          onClick={handleSubmit}
+          className="px-6 py-2 bg-white rounded-lg shadow"
+        >
+          Save
+        </button>
       </div>
     </div>
   );
