@@ -9,6 +9,12 @@ const sleepSchema = new Schema({
   duration: {
     type: Number,
   },
+  time: {
+    type: Date,
+  },
+  color: {
+    type: String,
+  },
 });
 
 const emotionSchema = new Schema({

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { User } from "../../utils/models/types/user";
 import { UserModel } from "../../utils/models/userModel";
 import { Sleep } from "../../utils/models/types/user";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 export default function ProfilePage() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [timerStart, setTimerStart] = useState<Date | null>(null);
@@ -10,6 +12,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [username, setUsername] = useState("");
   const [isNameOpen, setIsNameOpen] = useState(false);
+  const router = useRouter();
 
   const openModal = () => {
     setUsername("");
@@ -140,6 +143,14 @@ export default function ProfilePage() {
       const hours = timerStop / 3600;
       let quality: "bad" | "avarage" | "good" = "bad"; //bad is default
 
+      const colorOption = {
+        bad: "#FF6B4B",
+        avarage: "#F4F25E",
+        good: "#82F474",
+      };
+
+      const color = colorOption[quality] || "white";
+
       if (hours < 4) {
         quality = "bad";
       } else if (hours >= 4 && hours <= 7) {
@@ -150,6 +161,8 @@ export default function ProfilePage() {
       const sleepData: Sleep = {
         quality,
         duration: timerStop,
+        time: new Date(),
+        color: color,
       };
       submitSleep(sleepData);
       setTimerStop(null);
@@ -216,12 +229,12 @@ export default function ProfilePage() {
             >
               {user?.username ? "Change Username" : "Add Username"}
             </button>
-            <a
-              href="#responsive-header"
+            <Link
+              href="/pages/calendarPage"
               className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
             >
               Track sleeping quality
-            </a>
+            </Link>
           </div>
         </div>
       </nav>

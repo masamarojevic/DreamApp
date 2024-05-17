@@ -23,6 +23,8 @@ export interface Emotions {
 export interface Sleep {
   quality: "bad" | "avarage" | "good"; //enum
   duration: Number;
+  time: Date;
+  color: string;
 }
 
 // export interface Quality {

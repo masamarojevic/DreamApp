@@ -22,9 +22,9 @@ export async function POST(request: NextRequest) {
 
     const token = authorizationHeader.split(" ")[1];
 
-    const { quality, duration } = await request.json();
+    const { quality, duration, time, color } = await request.json();
 
-    if (!quality || !duration) {
+    if (!quality || !duration || !time || !color) {
       return new NextResponse(
         JSON.stringify({
           message: "Time was not mesaured",
@@ -65,11 +65,14 @@ export async function POST(request: NextRequest) {
     const newSleep = {
       quality,
       duration,
+      time: new Date(time),
+      color: color,
     };
     user.sleepPatern.push(newSleep);
-    console.log(newSleep);
+    console.log("server side newSleep before user save:", newSleep);
 
     await user.save();
+    console.log("server side newSleep after:", newSleep);
     return new NextResponse(
       JSON.stringify({
         message: "sleep added successfully",

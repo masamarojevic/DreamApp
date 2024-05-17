@@ -12,6 +12,7 @@ export default function Home() {
     email: "",
     password: "",
     notes: [],
+    sleepPatern: [],
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
