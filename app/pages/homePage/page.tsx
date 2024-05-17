@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { noteItem, Emotions } from "../../utils/models/types/user";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 //import useModalSort from "../../modals/sortModal";
 
@@ -15,6 +15,7 @@ export default function HomePage() {
   const [notes, setNotes] = useState<noteItem[]>([]);
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState<noteItem | null>(null);
+  const router = useRouter();
 
   // const { modalOptions, openModal, closeModal, selectModal } = useModalSort();
 
@@ -47,6 +48,7 @@ export default function HomePage() {
   const handleSelect = (dream: noteItem) => {
     setSelect(dream);
     setSearch(""); //after selecting empty the input
+    router.push(`/pages/viewNote/${dream._id}`);
   };
   const removeSelected = () => {
     setSelect(null);
