@@ -1,21 +1,27 @@
 "use client";
 import { User } from "../../utils/models/types/user";
 import { useRouter } from "next/navigation";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 
-export default function Page() {
+export default function Home() {
   const router = useRouter();
+
+  //FORM
   const [formData, setFormData] = useState<User>({
     email: "",
     password: "",
     notes: [],
+    sleepPatern: [],
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [event.target.id]: event.target.value,
+      [event.target.id]:
+        event.target.type === "number"
+          ? parseFloat(event.target.value)
+          : event.target.value,
     });
   };
 
@@ -23,7 +29,7 @@ export default function Page() {
     event.preventDefault();
 
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,31 +40,30 @@ export default function Page() {
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-        // Store the token in localStorage
-        if (result.token) {
-          localStorage.setItem("token", result.token);
-        }
-        router.push("/pages/homePage");
+        router.push("/pages/loginPage");
       } else {
-        console.log("login failed");
+        const error = await response.json();
+        console.error(error);
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   return (
     <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 ">
       <img
         src="/clouds.png"
         className="absolute z-0 w-full bottom-0"
         alt="Cloud"
-        style={{ maxWidth: "150%" }}
+        style={{ maxWidth: "150%", bottom: "-10%" }}
       />
 
-      <div className="z-10">
-        <h1 className="text-5xl font-bold text-center mb-8 text-gray-800">
+      <div className="z-10 w-full md:w-auto">
+        <h1 className="text-5xl font-bold text-center mb-8 text-white mt-10 md:mt-0 ">
           DreamCatch
         </h1>
+
         <div className="max-w-md w-full shadow-xl rounded-2xl p-8 border-4 border-white bg-gray-200">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col">
@@ -66,6 +71,7 @@ export default function Page() {
                 htmlFor="email"
                 className="mb-2 text-sm font-medium text-gray-700"
               ></label>
+
               <input
                 type="email"
                 id="email"
@@ -75,11 +81,13 @@ export default function Page() {
                 placeholder="email:"
               />
             </div>
+
             <div className="flex flex-col">
               <label
                 htmlFor="password"
                 className="mb-2 text-sm font-medium text-gray-700"
               ></label>
+
               <input
                 type="password"
                 id="password"
@@ -89,17 +97,18 @@ export default function Page() {
                 placeholder="password:"
               />
             </div>
+
             <div className="flex justify-center">
               <button
                 type="submit"
                 className="w-1/2 px-4 py-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-lg border border-white  hover:bg-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
               >
-                Log in
+                Register
               </button>
             </div>
             <div className="text-center">
               <Link href="/" className="text-sm text-blue-600 hover:underline">
-                Don't have an account? Register here!
+                Have an account? Log in here!
               </Link>
             </div>
           </form>

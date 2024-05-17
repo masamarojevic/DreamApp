@@ -1,27 +1,23 @@
 "use client";
 import { User } from "./utils/models/types/user";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 
-export default function Home() {
+export default function Page() {
   const router = useRouter();
-
-  //FORM
   const [formData, setFormData] = useState<User>({
     email: "",
     password: "",
     notes: [],
     sleepPatern: [],
   });
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [event.target.id]:
-        event.target.type === "number"
-          ? parseFloat(event.target.value)
-          : event.target.value,
+      [event.target.id]: event.target.value,
     });
   };
 
@@ -29,7 +25,7 @@ export default function Home() {
     event.preventDefault();
 
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,30 +36,31 @@ export default function Home() {
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-        router.push("/pages/loginPage");
+        // Store the token in localStorage
+        if (result.token) {
+          localStorage.setItem("token", result.token);
+        }
+        router.push("/pages/homePage");
       } else {
-        const error = await response.json();
-        console.error(error);
+        console.log("login failed");
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
   return (
     <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 ">
       <img
         src="/clouds.png"
         className="absolute z-0 w-full bottom-0"
         alt="Cloud"
-        style={{ maxWidth: "150%" }}
+        style={{ maxWidth: "150%", bottom: "-10%" }}
       />
 
-      <div className="z-10">
-        <h1 className="text-5xl font-bold text-center mb-8 text-white   ">
+      <div className="z-10 w-full md:w-auto">
+        <h1 className="text-5xl font-bold text-center mb-8 text-white mt-10 md:mt-0">
           DreamCatch
         </h1>
-
         <div className="max-w-md w-full shadow-xl rounded-2xl p-8 border-4 border-white bg-gray-200">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col">
@@ -71,7 +68,6 @@ export default function Home() {
                 htmlFor="email"
                 className="mb-2 text-sm font-medium text-gray-700"
               ></label>
-
               <input
                 type="email"
                 id="email"
@@ -81,13 +77,11 @@ export default function Home() {
                 placeholder="email:"
               />
             </div>
-
             <div className="flex flex-col">
               <label
                 htmlFor="password"
                 className="mb-2 text-sm font-medium text-gray-700"
               ></label>
-
               <input
                 type="password"
                 id="password"
@@ -97,21 +91,20 @@ export default function Home() {
                 placeholder="password:"
               />
             </div>
-
             <div className="flex justify-center">
               <button
                 type="submit"
                 className="w-1/2 px-4 py-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-lg border border-white  hover:bg-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
               >
-                Register
+                Log in
               </button>
             </div>
             <div className="text-center">
               <Link
-                href="/pages/loginPage"
+                href="/pages/registerPage"
                 className="text-sm text-blue-600 hover:underline"
               >
-                Have an account? Log in here!
+                Don't have an account? Register here!
               </Link>
             </div>
           </form>
