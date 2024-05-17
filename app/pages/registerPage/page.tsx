@@ -43,6 +43,7 @@ export default function Home() {
         router.push("/pages/loginPage");
       } else {
         const error = await response.json();
+        alert("User already exist. Please try again.");
         console.error(error);
       }
     } catch (error) {

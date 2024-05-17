@@ -42,6 +42,7 @@ export default function Page() {
         }
         router.push("/pages/homePage");
       } else {
+        alert("Incorrect email or password. Please try again.");
         console.log("login failed");
       }
     } catch (error) {
