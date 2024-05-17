@@ -150,17 +150,20 @@ export default function HomePage() {
   return (
     <div className="bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 min-h-screen p-4">
       <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
           <input
             type="search"
             value={search}
             placeholder="search for dream note"
             onChange={(e) => setSearch(e.target.value)}
-            className="px-4 py-2 border rounded-lg w-full max-w-md"
+            className="px-4 py-2 border rounded-lg w-full md:max-w-md mb-2 md:mb-0"
           />
 
           {search.length > 0 && (
-            <ul className="absolute bg-white border border-gray-300 rounded-lg mt-1 max-h-60 overflow-auto z-10">
+            <ul
+              className="absolute bg-white border border-gray-300 
+            rounded-lg mt-1 max-h-60 overflow-auto z-10  w-full md:w-auto"
+            >
               {notes
                 .filter(
                   (note) =>
@@ -195,13 +198,13 @@ export default function HomePage() {
           )} */}
 
           <Link href={"/pages/profilePage"}>
-            <button className="px-6 py-2 bg-white rounded-lg shadow">
+            <button className="px-6 py-2 bg-white rounded-lg shadow  w-full md:w-auto">
               profile
             </button>
           </Link>
         </div>
 
-        <div className="overflow-auto h-[80vh] p-2 bg-gradient-to-br from-gray-900 via-purple-700 to-gray-600 rounded-lg shadow m-10">
+        <div className="overflow-auto h-[80vh] p-2 bg-gradient-to-br from-gray-900 via-purple-700 to-gray-600 rounded-lg shadow m-2 md:m-10">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <button
@@ -211,7 +214,7 @@ export default function HomePage() {
                 sort
               </button>
               {modalOptions.isOpen && (
-                <div className="flex ">
+                <div className="flex flex-col md:flex-row ">
                   <button
                     onClick={() => selectModal(SortByOrder.NewToOld)}
                     className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
@@ -247,7 +250,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-10 p-15 pl-10 pr-10 pt-10 ml-5 mr-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-2">
             {notes.length > 0 ? (
               notes.map((note) => {
                 return (
