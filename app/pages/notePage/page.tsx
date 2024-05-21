@@ -129,6 +129,7 @@ export default function NotePage() {
         router.push("/pages/homePage");
       } else {
         const errorData = await response.json();
+        alert("Please fill in all containers");
         console.error("Failed to save the note:", errorData.message);
       }
     } catch (error) {
@@ -137,7 +138,7 @@ export default function NotePage() {
   };
 
   return (
-    <div className="relative min-h-screen p-4 flex justify-center items-center bg-black">
+    <div className="relative min-h-screen p-4 flex justify-center items-center  bg-gradient-to-br from-blue-900 via-purple-900 to-blue-800">
       <div className="relative z-10 bg-gradient-to-br from-blue-300 via-purple-600 to-blue-400 p-6 rounded-lg shadow-lg">
         <button
           onClick={() => router.push("/pages/homePage")}

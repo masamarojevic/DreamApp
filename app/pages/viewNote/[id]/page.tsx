@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { noteItem } from "../../../utils/models/types/user";
 import { DreamItem } from "../../../utils/models/types/dream";
 import { useRouter } from "next/navigation";
+import Loader from "../../../components/loader";
 
 export default function ViewNote() {
   // const [loading, setLoading] = useState(true);
@@ -13,6 +14,7 @@ export default function ViewNote() {
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState<DreamItem | null>(null);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   //const[editNote,setEditNote]=useState(false)
   const [edit, setEdit] = useState(false);
@@ -54,23 +56,26 @@ export default function ViewNote() {
       : [];
 
   useEffect(() => {
-    const getNote = async () => {
-      if (noteId) {
-        try {
-          const response = await fetch(`/api/getNote/${noteId}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+    let timer: ReturnType<typeof setTimeout>;
 
-          if (!response.ok) {
-            throw new Error("Failed to fetch note");
-          }
-          const data = await response.json();
-          setNote(data.note);
-        } catch (error) {
-          console.error("Error fetching note:", error);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/getNote/${noteId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch note");
         }
+
+        const data = await response.json();
+        setNote(data.note);
+      } catch (error) {
+        console.error("Error fetching note:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -81,21 +86,27 @@ export default function ViewNote() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
+
         if (!response.ok) {
-          throw new Error("failed to fetch dreams");
+          throw new Error("Failed to fetch dreams");
         }
+
         const data = await response.json();
-        console.log(data);
         setDreams(data.dreams);
-        console.log("received dreams", data.dreams);
       } catch (error) {
-        console.error("eroor fetchinf dreams:", error);
+        console.error("Error fetching dreams:", error);
       }
     };
 
-    getNote();
-    getDreams();
-    // editNote();
+    setLoading(true);
+    timer = setTimeout(() => {
+      // Fetch data after the loading spinner has been shown for at least 5 seconds
+      Promise.all([fetchData(), getDreams()]);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [noteId]);
 
   const editNote = async () => {
@@ -134,7 +145,7 @@ export default function ViewNote() {
   };
 
   if (!note) {
-    return <p>No note found or loading...</p>;
+    return <Loader />;
   }
   return (
     <div className="relative min-h-screen p-4 flex justify-center items-center bg-black">
