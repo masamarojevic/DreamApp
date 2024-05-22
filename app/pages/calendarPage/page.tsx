@@ -67,27 +67,6 @@ export default function CalendarPage() {
     return null;
   };
 
-  //   const tileContent = ({ date, view }: TileContentProps) => {
-  //     console.log("Tile Content Function Called", date, view);
-  //     if (view === "month") {
-  //       const sleep = sleepPattern?.find(
-  //         (sleep) => new Date(sleep.time).toDateString() === date.toDateString()
-  //       );
-  //       console.log("Matching sleep data:", sleep);
-  //       return sleep ? (
-  //         <div
-  //           style={{
-  //             backgroundColor: sleep.color,
-  //             borderRadius: "50%",
-  //             width: "10px",
-  //             height: "10px",
-  //             margin: "auto",
-  //           }}
-  //         ></div>
-  //       ) : null;
-  //     }
-  //     return null;
-  //   };
   return (
     <div className="flex items-center justify-between flex-wrap bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 p-6">
       <div className="bg-gray-100 p-4">

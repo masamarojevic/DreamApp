@@ -12,6 +12,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [username, setUsername] = useState("");
   const [isNameOpen, setIsNameOpen] = useState(false);
+  const [isClock, setIsClock] = useState(false);
   const router = useRouter();
 
   const openModal = () => {
@@ -111,6 +112,7 @@ export default function ProfilePage() {
   //timer
   const startTimer = () => {
     setIsTimerRunning(true);
+    setIsClock(true);
     setTimerStart(new Date());
   };
   const stopTimer = () => {
@@ -120,24 +122,9 @@ export default function ProfilePage() {
       );
 
       const durationInSeconds = Math.floor(durationInMSeconds / 1000);
-      // const hours = durationInSeconds / 3600;
-      // let quality: "bad" | "avarage" | "good" = "bad"; //bad is default
 
-      // if (hours < 4) {
-      //   quality = "bad";
-      // } else if (hours >= 4 && hours <= 7) {
-      //   quality = "avarage";
-      // } else if (hours > 7) {
-      //   quality = "good";
-      // }
-
-      // const sleepData: Sleep = {
-      //   quality,
-      //   duration: durationInSeconds,
-      // };
-      // console.log("sleep data:", sleepData);
-      // submitSleep(sleepData);
       setTimerStop(durationInSeconds);
+      setIsClock(false);
       setIsTimerRunning(false);
     }
   };
@@ -190,7 +177,7 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <div>
+    <div className={`relative `}>
       <nav className="flex items-center justify-between flex-wrap bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 p-6">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <span className="font-semibold text-xl tracking-tight">
@@ -202,29 +189,38 @@ export default function ProfilePage() {
           </span>
           <div>
             {isNameOpen && (
-              <div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="enter new username"
-                />
-                <button onClick={submitUsername}>save</button>
-                <button onClick={closeModal}>cancel</button>
+              <div className="fixed inset-0 flex items-center justify-center z-50">
+                <div className="bg-black opacity-50 absolute inset-0"></div>
+                <div className="absolute inset-0 backdrop-filter backdrop-blur-xl "></div>
+
+                <div className="bg-white p-6 rounded-lg shadow-lg z-50">
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="enter new username"
+                    className="mb-4 px-4 py-2 border rounded-lg w-full text-black"
+                  />
+                  <div className="flex justify-end">
+                    <button
+                      onClick={submitUsername}
+                      className="mr-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                    >
+                      save
+                    </button>
+                    <button
+                      onClick={closeModal}
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                    >
+                      cancel
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </div>
         </div>
-        <div className="block lg:hidden">
-          <div>
-            <button
-              onClick={logOut}
-              className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-            >
-              Log out
-            </button>
-          </div>
-        </div>
+
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
             <button
@@ -239,7 +235,18 @@ export default function ProfilePage() {
             >
               Track sleeping quality
             </Link>
+            <button
+              onClick={logOut}
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            >
+              Log out
+            </button>
           </div>
+          <Link href={"/pages/homePage"}>
+            <button className="px-6 py-2 mt-5 bg-white rounded-lg shadow  md:w-auto">
+              <img src="/home.png" style={{ width: 15, height: 15 }}></img>
+            </button>
+          </Link>
         </div>
       </nav>
       <div className="overflow-auto h-[20vh] p-2 mb-5 bg-white rounded-lg shadow flex items-center justify-between">
@@ -259,6 +266,7 @@ export default function ProfilePage() {
             Start Dream
           </button>
         )}
+
         {!isTimerRunning && timerStop !== null && (
           <p>Your sleep session: {timer(timerStop)}</p>
         )}
@@ -269,6 +277,15 @@ export default function ProfilePage() {
           Save
         </button>
       </div>
+      {isClock && (
+        <div className="flex justify-center">
+          <img
+            src="/midnight.gif"
+            style={{ width: 100, height: 100 }}
+            className=""
+          />
+        </div>
+      )}
     </div>
   );
 }

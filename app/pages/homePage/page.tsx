@@ -199,7 +199,7 @@ export default function HomePage() {
 
           <Link href={"/pages/profilePage"}>
             <button className="px-6 py-2 bg-white rounded-lg shadow  w-full md:w-auto">
-              profile
+              <img src="/profile.png" style={{ width: 15, height: 15 }}></img>
             </button>
           </Link>
         </div>
@@ -244,8 +244,8 @@ export default function HomePage() {
             </div>
 
             <Link href="/pages/notePage">
-              <button className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow">
-                new
+              <button className="px-5 py-1 m-2 bg-gray-300 rounded-lg shadow">
+                <img src="/add.png" style={{ height: 15, width: 15 }}></img>
               </button>
             </Link>
           </div>
