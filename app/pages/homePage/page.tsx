@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { noteItem, Emotions } from "../../utils/models/types/user";
 import { usePathname, useRouter } from "next/navigation";
+import { BackgroundBeams } from "../../components/background-beas";
 
 //import useModalSort from "../../modals/sortModal";
 

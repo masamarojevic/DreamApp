@@ -3,6 +3,7 @@ import { User } from "../../utils/models/types/user";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
+import { BackgroundBeams } from "../../components/background-beas";
 
 export default function Home() {
   const router = useRouter();
@@ -53,6 +54,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 ">
+      <BackgroundBeams />
       <img
         src="/clouds.png"
         className="absolute z-0 w-full bottom-0"
