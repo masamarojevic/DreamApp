@@ -177,10 +177,10 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <div className={`relative `}>
+    <div className={`relative`}>
       <nav className="flex items-center justify-between flex-wrap bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 p-6">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <span className="font-semibold text-xl tracking-tight">
+          <span className="font-semibold text-xl tracking-tight animate-bounce">
             {user ? (
               <p>Hello, {user.username || user.email}</p>
             ) : (

@@ -19,21 +19,6 @@ interface Options {
   color: string;
 }
 
-// const dot = (color = "transparent") => ({
-//   alignItems: "center",
-//   display: "flex",
-
-//   ":before": {
-//     backgroundColor: color,
-//     borderRadius: "50%",
-//     content: '" "',
-//     display: "block",
-//     marginRight: 8,
-//     height: 10,
-//     width: 10,
-//   },
-// });
-
 //CUSTOM STYLE
 const customStyles: StylesConfig<Options, false> = {
   control: (styles) => ({
@@ -178,7 +163,7 @@ export default function NotePage() {
           getOptionLabel={(option) => `${option.name}`}
         />
         <button
-          className="absolute bottom-0 right-3 m-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="absolute bottom-6 right-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600"
           onClick={saveNotes}
         >
           Save
