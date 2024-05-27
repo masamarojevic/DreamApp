@@ -52,7 +52,7 @@ export default function Page() {
   };
 
   return (
-    <div className="relative min-h-screen flex justify-center items-center p-4 bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 ">
+    <div className="min-h-screen flex justify-center items-center p-4 bg-gradient-to-br from-purple-950 via-purple-600 to-blue-400 ">
       <BackgroundBeams />
 
       <img
@@ -60,6 +60,13 @@ export default function Page() {
         className="absolute z-0 w-full bottom-0"
         alt="Cloud"
         style={{ maxWidth: "150%", bottom: "-10%" }}
+      />
+
+      <img
+        src="/logo.png"
+        className="absolute z-0 bottom-0 mb-2 animate-fifth top-[-3%] w-[50%] sm:w-[30%] md:w-[20%] lg:w-[15%]"
+        alt="Logo"
+        style={{ maxWidth: "40%", top: "-3%" }}
       />
 
       <div className="z-10 w-full md:w-auto">

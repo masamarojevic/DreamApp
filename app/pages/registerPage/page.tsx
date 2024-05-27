@@ -61,6 +61,12 @@ export default function Home() {
         alt="Cloud"
         style={{ maxWidth: "150%", bottom: "-10%" }}
       />
+      <img
+        src="/logo.png"
+        className="absolute z-0 bottom-0 mb-2 animate-fifth top-[-3%] w-[40%] sm:w-[30%] md:w-[20%] lg:w-[15%]"
+        alt="Logo"
+        style={{ maxWidth: "40%", top: "-3%" }}
+      />
 
       <div className="z-10 w-full md:w-auto">
         <h1 className="text-5xl font-bold text-center mb-8 text-white mt-10 md:mt-0 ">

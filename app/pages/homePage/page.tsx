@@ -1,65 +1,64 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { noteItem, Emotions } from "../../utils/models/types/user";
 import { usePathname, useRouter } from "next/navigation";
 import { BackgroundBeams } from "../../components/background-beas";
 import { BackgroundGradientAnimation } from "../../components/gradient";
 import { useModal } from "../../components/sortmodalFC";
-
-//import useModalSort from "../../modals/sortModal";
-
-//so it did not work by some reason to import the component but using it directly here it works
-//import SortByDateModal from "../../components/sortmodalFC";
-
+import NoteModal from "../../components/noteModal";
 import React from "react";
 import { SortByOrder } from "../../enums/sortEnum";
 export default function HomePage() {
+  const [noteModal, setNoteModal] = useState<noteItem | null>(null);
+  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [notes, setNotes] = useState<noteItem[]>([]);
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState<noteItem | null>(null);
   const router = useRouter();
+  const searchRef = useRef<HTMLInputElement | null>(null);
+  const dropdownRef = useRef<HTMLUListElement | null>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node) &&
+      searchRef.current &&
+      !searchRef.current.contains(event.target as Node)
+    ) {
+      setSearch("");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const { modalOptions, openModal, closeModal, selectModal } = useModal();
 
-  // const [modalOptions, setModalOptions] = useState({
-  //   isOpen: false,
-  //   isSelected: null as SortByOrder | null,
-  // });
-
-  // const handleSortSelection = (order: SortByOrder) => {
-  //   closeModal(); // Assuming closeModal updates the state to reflect changes
-  //   sortNotes(order); // Directly pass order to the sort function
-  // };
-
-  // //MODAL
-  // const openModal = useCallback(() => {
-  //   setModalOptions((prev) => ({ ...prev, isOpen: true }));
-  // }, []);
-
-  // const closeModal = useCallback(() => {
-  //   setModalOptions((prev) => ({ ...prev, isOpen: false }));
-  // }, []);
-
-  // const selectModal = useCallback((option: SortByOrder) => {
-  //   setModalOptions((prev) => ({
-  //     ...prev,
-  //     isOpen: true,
-  //     isSelected: option,
-  //   }));
-  // }, []);
-
   //search for dream note
   const handleSelect = (dream: noteItem) => {
-    setSelect(dream);
-    setSearch(""); //after selecting empty the input
-    router.push(`/pages/viewNote/${dream._id}`);
+    //setSelect(dream);
+    setNoteModal(dream);
+    setIsNoteModalOpen(true);
+    //setSearch(""); //after selecting empty the input
+    //router.push(`/pages/viewNote/${dream._id}`);
   };
-  // const removeSelected = () => {
-  //   setSelect(null);
-  // };
 
-  //get id from url
+  const handlCloseModal = () => {
+    setIsNoteModalOpen(false);
+    setNoteModal(null);
+  };
+
+  const handleViewNote = () => {
+    if (noteModal) {
+      router.push(`/pages/viewNote/${noteModal._id}`);
+    }
+  };
+
   const pathname = usePathname();
   const getIdFromPath = () => {
     const paths = pathname.split("/");
@@ -93,36 +92,6 @@ export default function HomePage() {
         });
     }
   }, []);
-
-  //CHECK WHY STATE IS NOT TRIGGERING THE SORTING
-
-  // useEffect(() => {
-  //   console.log(
-  //     "useEffect for Sorting: Selected order:",
-  //     modalOptions.isSelected
-  //   );
-  //   console.log("Current notes state before sorting:", notes);
-  //   if (modalOptions.isSelected) {
-  //     const sorted = [...notes].sort((a, b) => {
-  //       const dateA = new Date(a.date).getTime();
-  //       const dateB = new Date(b.date).getTime();
-  //       return modalOptions.isSelected === SortByOrder.NewToOld
-  //         ? dateB - dateA
-  //         : dateA - dateB;
-  //     });
-
-  //     setNotes(sorted);
-  //     console.log("Notes sorted", modalOptions.isSelected, sorted);
-  //   }
-  // }, [modalOptions.isSelected, notes]);
-
-  // const [, forceUpdate] = useState(0);
-  // useEffect(() => {
-  //   if (modalOptions.isSelected) {
-  //     sortNotes(modalOptions.isSelected);
-  //     forceUpdate((n) => n + 1); // This is not recommended for production, just for testing if rendering is the issue
-  //   }
-  // }, [modalOptions.isSelected]);
 
   //useEffect for sorting modal
   useEffect(() => {
@@ -159,18 +128,34 @@ export default function HomePage() {
   return (
     <BackgroundGradientAnimation>
       <div className="relative min-h-screen p-4 z-10">
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 ">
+          <div className="flex items-center">
+            <img
+              src="/logo.png"
+              className="animate-fifth w-16 md:w-24 lg:w-24 mb-5"
+              // className="absolute z-0 bottom-0 mb-2 animate-fifth  w-[10%] sm:w-[30%] md:w-[20%] lg:w-[5%]"
+              alt="Logo"
+              // style={{ maxWidth: "40%", top: "-3%" }}
+            />
+            <h1 className="text-white mb-10  ml-3 mt-5 text-xl md:text-3xl">
+              DreamCatch
+            </h1>
+          </div>
+
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
             <input
               type="search"
               value={search}
               placeholder="search for dream note"
               onChange={(e) => setSearch(e.target.value)}
-              className="px-4 py-2 border rounded-lg w-full md:max-w-md mb-2 md:mb-0 z-20"
+              className="px-4 py-2 border rounded-lg w-full lg:max-w-lg mb-2 "
             />
 
             {search.length > 0 && (
-              <ul className="absolute bg-white border border-gray-300 rounded-lg mt-1 max-h-60 overflow-auto z-30 w-full md:w-auto">
+              <ul
+                ref={dropdownRef}
+                className="absolute bg-white border border-gray-300 rounded-lg mt-1 max-h-60 overflow-auto z-30 w-full md:max-w-md lg:max-w-lg"
+              >
                 {notes
                   .filter(
                     (note) =>
@@ -198,9 +183,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <h1 className="text-center text-white font-bold">
-            Here are your dream notes:
-          </h1>
+          <h1 className="text-center text-white font-bold">Dream notes</h1>
 
           <div className="overflow-auto h-[80vh] p-2 bg-gradient-to-br from-purple-700 via-purple-700 to-gray-600 rounded-lg shadow m-2 md:m-10 z-10 ">
             <div className="flex justify-between items-center">
@@ -297,6 +280,12 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      <NoteModal
+        isOpen={isNoteModalOpen}
+        note={noteModal}
+        onClose={handlCloseModal}
+        onView={handleViewNote}
+      />
     </BackgroundGradientAnimation>
   );
 }
