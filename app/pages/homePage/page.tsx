@@ -5,11 +5,12 @@ import { noteItem, Emotions } from "../../utils/models/types/user";
 import { usePathname, useRouter } from "next/navigation";
 import { BackgroundBeams } from "../../components/background-beas";
 import { BackgroundGradientAnimation } from "../../components/gradient";
+import { useModal } from "../../components/sortmodalFC";
 
 //import useModalSort from "../../modals/sortModal";
 
 //so it did not work by some reason to import the component but using it directly here it works
-import SortByDateModal from "../../components/sortmodalFC";
+//import SortByDateModal from "../../components/sortmodalFC";
 
 import React from "react";
 import { SortByOrder } from "../../enums/sortEnum";
@@ -19,43 +20,46 @@ export default function HomePage() {
   const [select, setSelect] = useState<noteItem | null>(null);
   const router = useRouter();
 
-  // const { modalOptions, openModal, closeModal, selectModal } = useModalSort();
+  const { modalOptions, openModal, closeModal, selectModal } = useModal();
 
-  const [modalOptions, setModalOptions] = useState({
-    isOpen: false,
-    isSelected: null as SortByOrder | null,
-  });
+  // const [modalOptions, setModalOptions] = useState({
+  //   isOpen: false,
+  //   isSelected: null as SortByOrder | null,
+  // });
 
   // const handleSortSelection = (order: SortByOrder) => {
   //   closeModal(); // Assuming closeModal updates the state to reflect changes
   //   sortNotes(order); // Directly pass order to the sort function
   // };
-  const openModal = useCallback(() => {
-    setModalOptions((prev) => ({ ...prev, isOpen: true }));
-  }, []);
 
-  const closeModal = useCallback(() => {
-    setModalOptions((prev) => ({ ...prev, isOpen: false }));
-  }, []);
+  // //MODAL
+  // const openModal = useCallback(() => {
+  //   setModalOptions((prev) => ({ ...prev, isOpen: true }));
+  // }, []);
 
-  const selectModal = useCallback((option: SortByOrder) => {
-    setModalOptions((prev) => ({
-      ...prev,
-      isOpen: true,
-      isSelected: option,
-    }));
-  }, []);
+  // const closeModal = useCallback(() => {
+  //   setModalOptions((prev) => ({ ...prev, isOpen: false }));
+  // }, []);
 
-  //modal for sorting by date :
+  // const selectModal = useCallback((option: SortByOrder) => {
+  //   setModalOptions((prev) => ({
+  //     ...prev,
+  //     isOpen: true,
+  //     isSelected: option,
+  //   }));
+  // }, []);
+
+  //search for dream note
   const handleSelect = (dream: noteItem) => {
     setSelect(dream);
     setSearch(""); //after selecting empty the input
     router.push(`/pages/viewNote/${dream._id}`);
   };
-  const removeSelected = () => {
-    setSelect(null);
-  };
+  // const removeSelected = () => {
+  //   setSelect(null);
+  // };
 
+  //get id from url
   const pathname = usePathname();
   const getIdFromPath = () => {
     const paths = pathname.split("/");
@@ -119,13 +123,16 @@ export default function HomePage() {
   //     forceUpdate((n) => n + 1); // This is not recommended for production, just for testing if rendering is the issue
   //   }
   // }, [modalOptions.isSelected]);
+
+  //useEffect for sorting modal
   useEffect(() => {
     console.log("Effect triggered for sorting:", modalOptions.isSelected);
     if (modalOptions.isSelected !== null) {
       sortNotes(modalOptions.isSelected);
     }
-  }, [modalOptions.isSelected]); // Ensure useEffect triggers whenever isSelected changes
+  }, [modalOptions.isSelected]);
 
+  //sort notes
   const sortNotes = (sortByOrder: SortByOrder) => {
     console.log("Sorting notes by:", sortByOrder);
     const sorted = [...notes].sort((a, b) => {
@@ -190,6 +197,10 @@ export default function HomePage() {
               </button>
             </Link>
           </div>
+
+          <h1 className="text-center text-white font-bold">
+            Here are your dream notes:
+          </h1>
 
           <div className="overflow-auto h-[80vh] p-2 bg-gradient-to-br from-purple-700 via-purple-700 to-gray-600 rounded-lg shadow m-2 md:m-10 z-10 ">
             <div className="flex justify-between items-center">

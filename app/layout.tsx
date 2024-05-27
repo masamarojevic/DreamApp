@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ModalProvider } from "./components/sortmodalFC";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,12 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    //ersatta med provider
-    //     <MyContext.Provider value={{ value, setValue }}>
-    //     {children}
-    // </MyContext.Provider>
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ModalProvider>{children}</ModalProvider>
+      </body>
     </html>
   );
 }
