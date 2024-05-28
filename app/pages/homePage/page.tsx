@@ -127,7 +127,7 @@ export default function HomePage() {
 
   return (
     <BackgroundGradientAnimation>
-      <div className="relative min-h-screen p-4 z-10">
+      <div className="relative min-h-screen overflow-y-auto p-4 z-10">
         <div className="container mx-auto p-4">
           <div className="flex items-center justify-start">
             <img
@@ -151,7 +151,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-center mb-20 ">
+          <div className="flex flex-col md:flex-row justify-between items-center ">
             <input
               type="search"
               value={search}
@@ -243,7 +243,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-2 overflow-auto">
               {notes.length > 0 ? (
                 notes.map((note) => {
                   return (
