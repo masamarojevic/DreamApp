@@ -179,7 +179,7 @@ export default function ViewNote() {
             )}
           </div>
           {select && (
-            <div className="relative border p-4 rounded-lg mt-4">
+            <div className="relative border  border-emerald-300 p-4 rounded-lg mt-4">
               <button
                 onClick={removeSelected}
                 className="absolute top-0 right-0 p-1 text-xl font-bold hover:text-red-600"

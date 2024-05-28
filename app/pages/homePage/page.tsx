@@ -128,8 +128,8 @@ export default function HomePage() {
   return (
     <BackgroundGradientAnimation>
       <div className="relative min-h-screen p-4 z-10">
-        <div className="container mx-auto p-4 ">
-          <div className="flex items-center">
+        <div className="container mx-auto p-4">
+          <div className="flex items-center justify-start">
             <img
               src="/logo.png"
               className="animate-fifth w-16 md:w-24 lg:w-24 mb-5"
@@ -137,24 +137,34 @@ export default function HomePage() {
               alt="Logo"
               // style={{ maxWidth: "40%", top: "-3%" }}
             />
-            <h1 className="text-white mb-10  ml-3 mt-5 text-xl md:text-3xl">
+            <h1 className="text-white mb-10  ml-3 mt-5 text-xl md:text-3xl  flex-grow">
               DreamCatch
             </h1>
+            <Link href={"/pages/profilePage"}>
+              <button className="mb-5 ml-20 px-5 py-2  rounded-lg shadow  flex-shrink-0  border border-emerald-400">
+                <img
+                  src="/profile.png"
+                  className="mix-blend-multiply"
+                  style={{ width: 20, height: 20 }}
+                ></img>
+              </button>
+            </Link>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-20 ">
             <input
               type="search"
               value={search}
               placeholder="search for dream note"
               onChange={(e) => setSearch(e.target.value)}
-              className="px-4 py-2 border rounded-lg w-full lg:max-w-lg mb-2 "
+              className="px-4 py-2 border rounded-lg w-full lg:max-w-lg mb-5 relative  "
             />
 
             {search.length > 0 && (
               <ul
                 ref={dropdownRef}
-                className="absolute bg-white border border-gray-300 rounded-lg mt-1 max-h-60 overflow-auto z-30 w-full md:max-w-md lg:max-w-lg"
+                className="absolute bg-white border border-gray-300 rounded-lg mt-12 max-h-40 overflow-auto z-30 w-full md:max-w-md lg:max-w-lg md:mt-20"
+                style={{ maxHeight: "5rem" }}
               >
                 {notes
                   .filter(
@@ -176,21 +186,23 @@ export default function HomePage() {
               </ul>
             )}
 
-            <Link href={"/pages/profilePage"}>
+            {/* <Link href={"/pages/profilePage"}>
               <button className="px-6 py-2 bg-white rounded-lg shadow w-full md:w-auto z-20">
                 <img src="/profile.png" style={{ width: 15, height: 15 }}></img>
               </button>
-            </Link>
+            </Link> */}
           </div>
 
-          <h1 className="text-center text-white font-bold">Dream notes</h1>
+          <h1 className="text-center text-white font-bold  border border-emerald-400 p-2 rounded ">
+            Dream notes
+          </h1>
 
-          <div className="overflow-auto h-[80vh] p-2 bg-gradient-to-br from-purple-700 via-purple-700 to-gray-600 rounded-lg shadow m-2 md:m-10 z-10 ">
+          <div className=" border border-emerald-400 overflow-auto h-[80vh] p-2 bg-gradient-to-br from-purple-700 via-blue-300 to-gray-600 rounded-lg shadow m-2 md:m-10 z-10 ">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <button
                   onClick={openModal}
-                  className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow z-20"
+                  className="px-6 py-1 m-2 border border-emerald-300 rounded-lg shadow z-20 text-white"
                 >
                   sort
                 </button>
@@ -198,25 +210,25 @@ export default function HomePage() {
                   <div className="flex flex-col md:flex-row z-30">
                     <button
                       onClick={() => selectModal(SortByOrder.NewToOld)}
-                      className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                      className="px-6 py-1 m-2 rounded-lg shadow"
                     >
                       newest to oldest
                     </button>
                     <button
                       onClick={() => selectModal(SortByOrder.OldToNew)}
-                      className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                      className="px-6 py-1 m-2  rounded-lg shadow"
                     >
                       oldest to newest
                     </button>
                     <button
                       onClick={sortNotesEmotions}
-                      className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                      className="px-6 py-1 m-2 rounded-lg shadow"
                     >
                       emotions
                     </button>
                     <button
                       onClick={closeModal}
-                      className="px-6 py-1 m-2 bg-gray-300 rounded-lg shadow"
+                      className="px-6 py-1 m-2  rounded-lg shadow"
                     >
                       &times;
                     </button>

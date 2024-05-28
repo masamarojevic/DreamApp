@@ -249,18 +249,18 @@ export default function ProfilePage() {
           </Link>
         </div>
       </nav>
-      <div className="overflow-auto h-[20vh] p-2 mb-5 bg-white rounded-lg shadow flex items-center justify-between">
-        <h1> Going to sleep?</h1>
+      <h1 className="text-lg md:text-xl font-semibold p-3"> Going to sleep?</h1>
+      <div className="flex flex-col md:grid md:grid-cols-3 md:gap-4 items-center md:justify-items-center p-4 md:p-20 w-full">
         {isTimerRunning ? (
           <button
-            className="px-6 py-2 bg-white rounded-lg shadow"
+            className="px-6 py-3 bg-purple-500 text-white rounded-lg shadow-lg hover:bg-purple-600 transition-all duration-300 md:w-auto m-4 md:mr-10"
             onClick={stopTimer}
           >
             Stop Dream
           </button>
         ) : (
           <button
-            className="px-6 py-2 bg-white rounded-lg shadow"
+            className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300 md:w-auto m-4 md:mr-10 "
             onClick={startTimer}
           >
             Start Dream
@@ -268,17 +268,21 @@ export default function ProfilePage() {
         )}
 
         {!isTimerRunning && timerStop !== null && (
-          <p>Your sleep session: {timer(timerStop)}</p>
+          <p className="text-center  m-4 md:mb-0">
+            Your sleep session: {timer(timerStop)}
+          </p>
         )}
-        <button
-          onClick={handleSubmit}
-          className="px-6 py-2 bg-white rounded-lg shadow"
-        >
-          Save
-        </button>
+        {!isTimerRunning && timerStop !== null && (
+          <button
+            onClick={handleSubmit}
+            className="px-6 py-3 bg-purple-500 text-white rounded-lg shadow-lg hover:bg-purple-600 transition-all duration-300 md:w-auto"
+          >
+            Save
+          </button>
+        )}
       </div>
       {isClock && (
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <img
             src="/midnight.gif"
             style={{ width: 100, height: 100 }}

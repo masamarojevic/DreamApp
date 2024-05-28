@@ -64,13 +64,13 @@ export default function Page() {
 
       <img
         src="/logo.png"
-        className="absolute z-0 bottom-0 mb-2 animate-fifth top-[-3%] w-[50%] sm:w-[30%] md:w-[20%] lg:w-[15%]"
+        className="absolute z-0 bottom-0 mb-2 animate-fifth top-[-1%] w-[50%] sm:w-[30%] md:w-[20%] lg:w-[10%] lg:mt-10"
         alt="Logo"
-        style={{ maxWidth: "40%", top: "-3%" }}
+        style={{ maxWidth: "30%", bottom: "-10%" }}
       />
 
       <div className="z-10 w-full md:w-auto">
-        <h1 className="text-5xl font-bold text-center mb-8 text-white mt-10 md:mt-0">
+        <h1 className="text-5xl font-bold text-center mb-8 text-white  md:mt-0">
           DreamCatch
         </h1>
         <div className="max-w-md w-full shadow-xl rounded-2xl p-8 border-4 border-white bg-gray-200">

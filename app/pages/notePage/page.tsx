@@ -153,7 +153,7 @@ export default function NotePage() {
           className="absolute right-5 bottom-1 top-56 w-1/2 h-auto object-cover z-0"
           alt="Cloud"
         /> */}
-        <h1>What was this dream emotion?</h1>
+        <h1 className="text-white">What was this dream emotion?</h1>
         <Select
           defaultValue={selectedColor}
           value={selectedColor}
@@ -163,7 +163,7 @@ export default function NotePage() {
           getOptionLabel={(option) => `${option.name}`}
         />
         <button
-          className="absolute bottom-6 right-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600"
+          className="absolute bottom-6 right-3 px-4 py-2 border border-emerald-300 text-white rounded hover:bg-blue-600"
           onClick={saveNotes}
         >
           Save
