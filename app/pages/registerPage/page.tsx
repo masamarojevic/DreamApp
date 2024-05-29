@@ -41,7 +41,7 @@ export default function Home() {
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-        router.push("/pages/loginPage");
+        router.push("/");
       } else {
         const error = await response.json();
         alert("User already exist. Please try again.");
