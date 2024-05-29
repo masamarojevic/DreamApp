@@ -1,16 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import React from "react";
-import Select, {
-  StylesConfig,
-  SingleValue,
-  OptionProps,
-  GroupBase,
-  components,
-  Props as SelectProps,
-} from "react-select";
+import Select, { StylesConfig, Props as SelectProps } from "react-select";
 import chroma from "chroma-js";
 
 interface Options {
@@ -148,11 +141,6 @@ export default function NotePage() {
           ></textarea>
         </div>
 
-        {/* <img
-          src="/clouds.png"
-          className="absolute right-5 bottom-1 top-56 w-1/2 h-auto object-cover z-0"
-          alt="Cloud"
-        /> */}
         <h1 className="text-white">What was this dream emotion?</h1>
         <Select
           defaultValue={selectedColor}
@@ -168,17 +156,6 @@ export default function NotePage() {
         >
           Save
         </button>
-        {/* <div>
-          <select value={""}>Choose dream emotion</select>
-         {colors.map((color,index) => (
-          <option key={index} value={color.name} style={color: colour.code}>
-
-          </option>
-         ))}
-        </div> */}
-        {/* <button className="px-6 py-1 m-2 bg-white rounded-lg shadow">
-          Choose dream colour
-        </button> */}
       </div>
     </div>
   );

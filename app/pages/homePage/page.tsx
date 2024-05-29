@@ -133,9 +133,7 @@ export default function HomePage() {
             <img
               src="/logo.png"
               className="animate-fifth w-16 md:w-24 lg:w-24 mb-5"
-              // className="absolute z-0 bottom-0 mb-2 animate-fifth  w-[10%] sm:w-[30%] md:w-[20%] lg:w-[5%]"
               alt="Logo"
-              // style={{ maxWidth: "40%", top: "-3%" }}
             />
             <h1 className="text-white mb-10  ml-3 mt-5 text-xl md:text-3xl  flex-grow">
               DreamCatch

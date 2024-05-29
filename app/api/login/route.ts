@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       const token = jwt.sign(
         { userId: user._id },
         jwtSecret, // Secret key from my .env.local file
-        { expiresIn: "1h" } // Token expiration time
+        { expiresIn: "3h" } // Token expiration time
       );
 
       return NextResponse.json(

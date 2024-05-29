@@ -1,6 +1,5 @@
 "use client";
 import { usePathname } from "next/navigation";
-
 import { useEffect, useState } from "react";
 import { noteItem } from "../../../utils/models/types/user";
 import { DreamItem } from "../../../utils/models/types/dream";
@@ -190,7 +189,7 @@ export default function ViewNote() {
               <p>{select.meaning}</p>
             </div>
           )}
-          <div className="space-y-4 space-x-4">
+          <div className="flex flex-col items-center justify-center space-y-4">
             {edit ? (
               <>
                 <input
@@ -203,18 +202,20 @@ export default function ViewNote() {
                   onChange={(e) => setEditDescription(e.target.value)}
                   className="w-full h-32 p-2 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
                 />
-                <button
-                  onClick={editNote}
-                  className="px-6 py-2 bg-white rounded-lg shadow"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={() => setEdit(false)}
-                  className="px-6 py-2 bg-white rounded-lg shadow"
-                >
-                  Cancel
-                </button>
+                <div className="flex space-x-20 md:space-x-96">
+                  <button
+                    onClick={editNote}
+                    className="px-6 py-2 bg-white rounded-lg shadow"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setEdit(false)}
+                    className="px-6 py-2 bg-white rounded-lg shadow"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </>
             ) : (
               <>
